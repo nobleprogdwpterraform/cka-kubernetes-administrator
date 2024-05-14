@@ -6,3 +6,5 @@ metadata:
   name: dev
 
 #kubectl create -f 1-4-1-pods.yaml --namespace=dev
+# kubectl config set-context --current --namespace=dev
+# kubectl delete pod nginx -n dev

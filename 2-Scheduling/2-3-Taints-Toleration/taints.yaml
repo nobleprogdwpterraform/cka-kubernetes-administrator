@@ -1,5 +1,6 @@
 # kubectl cordon node02
-#kubectl taint nodes node1 app=blue:NoSchedule
+#kubectl taint nodes node1 app=blue:NoSchedule (to taint node)
+# kubectl taint nodes node1 app=blue:NoSchedule- (to untaint node)
 
 apiVersion: v1
 kind: Pod
