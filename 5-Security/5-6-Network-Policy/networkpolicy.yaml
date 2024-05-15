@@ -19,7 +19,7 @@ spec:
       port: 3306
   egress:
   - to:
-    - ipBlpodSelectorock:
+    - ipBlockSelector:
         matchLabels:
           role: api-pod
     ports:
