@@ -81,8 +81,9 @@ sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 
     1.3 Creating a cluster with kubeadm (https://v1-29.docs.kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
-    Run below only on controlplane node
-    sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=10.0.32.254
+    Run below only on controlplane node only
+    Get ip addr of controlplane ndoe: ip addr
+    sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=replace_with_ip_addr_of_master
     run the commands (output of previous commands)to copy kube-config file to home directory
     kubeadm token create --print-join-command (in case you cleard the terminal, will need after pod networking)
 
@@ -93,6 +94,7 @@ sudo apt-mark hold kubelet kubeadm kubectl
      add below env variabels under container named weave
      name: IPALLOC_RANGE
      value: 10.244.0.0/16
+     kubectl create -f net.yaml
 
      1.5 Join the worker nodes in the cluster
     kubeadm token create --print-join-command (to print the join command to be run on workder nodes)
