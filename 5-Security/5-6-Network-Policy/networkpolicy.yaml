@@ -26,3 +26,5 @@ spec:
     - protocol: TCP
       port: 3306
 
+
+# https://github.com/nobleprogdwpterraform/cka-kubernetes-administrator
