@@ -1,10 +1,18 @@
+Pre-requisites 
+1. Download and install virutual box https://www.virtualbox.org/wiki/Downloads
+2. Instsall vagrant to provision virtual machines
+3. Download the code repository using git clone (or download as zip)
+4. Goto code reposistory directory and run command: vagrant up (this will provision 3 virtual machines named controlplane, node01 and node02)
+5. Verify virtual machines by running command: vagrant status
+6. Login to each virtual machine by running command: vagrant ss controlplane (or vagrant ssh node01 or vagrant ssh node02)
 
-1. Cluster Installation:
+
+7. Cluster Installation:
         Installation using kubeadm (https://v1-29.docs.kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
     
-        1.1 Installing container runtime containderd
+        7.1 Installing container runtime containderd
             https://v1-29.docs.kubernetes.io/docs/setup/production-environment/container-runtimes/
-        1.1.1 Enable IPV4 forwarding
+        7.1.1 Enable IPV4 forwarding
             ----Run below on all nodes for Forwarding IPv4 ------------------
             cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
             overlay
@@ -26,24 +34,24 @@
             -----------------------------
             
 
-             1.1.2 Add Docker's official GPG key:
+             7.1.2 Add Docker's official GPG key:
                 sudo apt-get update
                 sudo apt-get install ca-certificates curl
                 sudo install -m 0755 -d /etc/apt/keyrings
                 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
                 sudo chmod a+r /etc/apt/keyrings/docker.asc
             
-            1.1.3 Add the repository to Apt sources:
+            7.1.3 Add the repository to Apt sources:
                 echo \
                   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
                   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
                   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
                 sudo apt-get update
         
-            1.1.4 Install the Docker packages:
+            7.1.4 Install the Docker packages:
                 sudo apt-get install containerd.io
                 systemctl status containerd (to verify containerd is active)
-            1.1.5 Configuring the systemd cgroup driver
+            7.1.5 Configuring the systemd cgroup driver
                 sudo vi /etc/containerd/config.toml (dG to delete all existing lines, paste below lines,save)
                 replace existing content of config.toml with below in config.toml file and save exit
                     version = 2
@@ -56,30 +64,30 @@
                               [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
                                 SystemdCgroup = true
         
-                1.1.5 Restart the containerd 
+                7.1.5 Restart the containerd 
                     sudo systemctl restart containerd
   
 
-            1.2 Installing kubeadm, kubelet and kubectl
-                1.2.1 Update the apt package index and install packages needed to use the Kubernetes apt repository:
+            7.2 Installing kubeadm, kubelet and kubectl
+                7.2.1 Update the apt package index and install packages needed to use the Kubernetes apt repository:
                     sudo apt-get update
                     sudo apt-get install -y apt-transport-https ca-certificates curl gpg
-                1.2.2 Download the public signing key for the Kubernetes package repositories
+                7.2.2 Download the public signing key for the Kubernetes package repositories
                     curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-                1.2.3 Add the appropriate Kubernetes apt repository
+                7.2.3 Add the appropriate Kubernetes apt repository
                     echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
-                1.2.4 Update the apt package index
+                7.2.4 Update the apt package index
                     sudo apt-get update
                     sudo apt-get install -y kubelet kubeadm kubectl
                     sudo apt-mark hold kubelet kubeadm kubectl
         
-            1.3 Creating a cluster with kubeadm (https://v1-29.docs.kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
+            7.3 Creating a cluster with kubeadm (https://v1-29.docs.kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
                 Run below only on controlplane node only
                 Get ip addr of controlplane ndoe: ip addr
                 sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=replace_with_ip_addr_of_master
                 run the commands (output of previous commands)to copy kube-config file to home directory
         
-            1.4 Installing Addons(https://v1-29.docs.kubernetes.io/docs/concepts/cluster-administration/addons/#networking-and-network-policy)
+            7.4 Installing Addons(https://v1-29.docs.kubernetes.io/docs/concepts/cluster-administration/addons/#networking-and-network-policy)
                  Run below on master node only:
                  wget https://reweave.azurewebsites.net/k8s/v1.29/net.yaml
                  vi net.yaml
@@ -88,14 +96,14 @@
                  value: 10.244.0.0/16
                  kubectl create -f net.yaml
         
-             1.5 Join the worker nodes in the cluster by runnig below on worker nodes
+             7.5 Join the worker nodes in the cluster by runnig below on worker nodes
                 kubeadm token create --print-join-command (to print the join command to be run on workder nodes)
                 sudo replace_with_join_commands (only run on all worker nodes)
                 verify by running a container: kubectl run nginx --image=nginx
 
-2. Upgrading the cluster using Kubeadm
+8. Upgrading the cluster using Kubeadm
    
-        2.1 Upgrade kubeadm version before upgrading kuberentes cluster (kubeadm follows same release versions as k8s)
+        8.1 Upgrade kubeadm version before upgrading kuberentes cluster (kubeadm follows same release versions as k8s)
    
            echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/
            sudo apt update
