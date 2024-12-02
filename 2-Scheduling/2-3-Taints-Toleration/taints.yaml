@@ -2,6 +2,7 @@
 #kubectl taint nodes node1 app=blue:NoSchedule (to taint node)
 # kubectl taint nodes node1 app=blue:NoSchedule- (to untaint node)
 
+cat <<EOF | kubectl create -f -
 apiVersion: v1
 kind: Pod
 metadata:
@@ -15,3 +16,4 @@ spec:
    operator: "Equal"
    value: "red"
    effect: "NoSchedule"
+EOF

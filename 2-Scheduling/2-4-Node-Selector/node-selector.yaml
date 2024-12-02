@@ -1,6 +1,7 @@
 # kubectl label nodes node01 size=Large
 # kubectl label nodes node02 size=Medium
 
+cat <<EOF | kubectl create -f -
 apiVersion: v1
 kind: Pod
 metadata:
@@ -11,3 +12,4 @@ spec:
    image: nginx
  nodeSelector:
   size: Large
+EOF

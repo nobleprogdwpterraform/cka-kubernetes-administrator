@@ -1,3 +1,4 @@
+cat << EOF | kubectl create -f -
 apiVersion: v1
 kind: Service
 metadata:
@@ -11,3 +12,18 @@ spec:
  selector:
    app: myapp
    type: front-end
+EOF
+
+cat <<EOF | kubectl create -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-server
+  labels:
+    app: myapp
+    type: front-end
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+EOF
