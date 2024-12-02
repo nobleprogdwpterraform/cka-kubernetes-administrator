@@ -2,7 +2,7 @@
 # https://code.visualstudio.com/download
 # sudo apt insall ./code....deb
 
-# Remove any existing virtual boxes using oracle virtualbox (right click and remove)
+
 # Clone the code repo by running command: git clone https://github.com/nobleprogdwpterraform/certified-kubernetes-security-specialist.git
 # go to Downloads and code repository (certified-kubernetes-security-specialist)
 # run vagrant up (to bring 3 nodes up, 1 master node and 2 worker nodes setup)
@@ -27,7 +27,7 @@ EOF
     sudo modprobe br_netfilter
 }
 
-# 3. 
+# 3.  Enabling Network Forwarding and iptables Rules for Kubernetes
 {
     cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-iptables  = 1
@@ -38,7 +38,7 @@ EOF
     sudo sysctl --system
 }
 
-# 4. 
+# 4. Installing containerd Runtime for Kubernetes
 sudo apt-get install -y containerd
 
 # 5. systemd cgroup configuration
@@ -50,16 +50,17 @@ sudo apt-get install -y containerd
 # 6. restart
 sudo systemctl restart containerd
 
-#7. kubernetes latest version
+# 7. kubernetes latest version
 KUBE_LATEST=$(curl -L -s https://dl.k8s.io/release/stable.txt | awk 'BEGIN { FS="." } { printf "%s.%s", $1, $2 }')
 
-# 8. 
+# 8. Adding Kubernetes APT Repository GPG Key
 {
     sudo mkdir -p /etc/apt/keyrings
     curl -fsSL https://pkgs.k8s.io/core:/stable:/${KUBE_LATEST}/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 }
 
-# 9. 
+# 9. Adding Kubernetes APT Repository to Sources List
+This command adds the Kubernetes APT repository to the system's sources list, enabling the installation of Kubernetes packages from the specified repository.
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/${KUBE_LATEST}/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 # 10. install kubelet kubeadm and kubectl
@@ -78,7 +79,7 @@ sudo crictl config \
 ip addr
 PRIMARY_IP=
 
-# 13. 
+# 13. Configuring Kubelet with Custom Node IP
 cat <<EOF | sudo tee /etc/default/kubelet
 KUBELET_EXTRA_ARGS='--node-ip ${PRIMARY_IP}'
 EOF
