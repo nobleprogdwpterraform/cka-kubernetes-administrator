@@ -3,8 +3,8 @@
 # sudo apt insall ./code....deb
 
 
-# Clone the code repo by running command: git clone https://github.com/nobleprogdwpterraform/certified-kubernetes-security-specialist.git
-# go to Downloads and code repository (certified-kubernetes-security-specialist)
+# Clone the code repo by running command: git clone https://github.com/nobleprogdwpterraform/cka-kubernetes-administrator.git
+# go to Downloads and code repository (cka)
 # run vagrant up (to bring 3 nodes up, 1 master node and 2 worker nodes setup)
 
 
