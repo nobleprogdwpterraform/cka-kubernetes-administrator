@@ -1,3 +1,4 @@
+cat <<EOF | kubectl create -f -
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -25,6 +26,5 @@ spec:
     ports:
     - protocol: TCP
       port: 3306
+EOF
 
-
-# https://github.com/nobleprogdwpterraform/cka-kubernetes-administrator

@@ -1,3 +1,4 @@
+cat <<EOF | kubectl create -f -
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -12,7 +13,7 @@ rules:
   verbs: ["create"]
 
 
-      ---
+cat <<EOF | kubectl create -f -
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:

@@ -19,7 +19,7 @@ spec:
 EOF
 
 To uncordon node:
-kubectl taint nodes node1 app=blue:NoSchedule-
+kubectl taint nodes node01 app=blue:NoSchedule-
 
 To see the tains on master node: 
 kubectl describe node controlplane | grep Taints

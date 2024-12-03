@@ -1,3 +1,4 @@
+cat <<EOF | kubectl create -f -
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -6,10 +7,10 @@ rules:
 - apiGroups: [""] # "" indicates the core API group
   resources: ["nodes"]
   verbs: ["get", "list", "delete", "create"]
+EOF
 
 
-
-  ---
+cat <<EOF | kubectl create -f -
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -22,6 +23,7 @@ roleRef:
   kind: ClusterRole
   name: cluster-administrator
   apiGroup: rbac.authorization.k8s.io
+EOF
 
   kubectl api-resources --namespaced=true/false
   kubectl auth can-i create nodes --as cluster-admin
