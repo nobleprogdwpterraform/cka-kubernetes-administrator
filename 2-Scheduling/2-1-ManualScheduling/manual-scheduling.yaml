@@ -13,3 +13,9 @@ spec:
    - containerPort: 8080
  nodeName: node02
 EOF
+
+# Verify node for above pod 
+kubectl get pods -o wide
+
+# Try editing pod with different,say node01, should result in error
+kubectl edit pod nginx 

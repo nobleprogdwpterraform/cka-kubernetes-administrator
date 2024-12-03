@@ -1,9 +1,11 @@
+cat <<EOF | kubectl create -f - 
 apiVersion: v1
 kind: Pod
 metadata:
-  name: simple-webapp-color
+  namespace: dev
+  name: simple-webapp
   labels:
-    name: simple-webapp-color
+    name: simple-webapp
 spec:
  containers:
  - name: nginx
@@ -12,8 +14,9 @@ spec:
     - containerPort:  8080
    resources:
      requests:
-      memory: "50Mi"
-      cpu: "0.5"
+      memory: "60Mi"
+      cpu: "1"
      limits:
-       memory: "50Mi"
-       cpu: "0.5"
+       memory: "100Mi"
+       cpu: "2"
+EOF

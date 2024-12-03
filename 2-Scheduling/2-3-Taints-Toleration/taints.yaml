@@ -1,6 +1,6 @@
-# kubectl cordon node02
-#kubectl taint nodes node1 app=blue:NoSchedule (to taint node)
-# kubectl taint nodes node1 app=blue:NoSchedule- (to untaint node)
+kubectl cordon node02
+
+kubectl taint nodes node1 app=blue:NoSchedule (to taint node)
 
 cat <<EOF | kubectl create -f -
 apiVersion: v1
@@ -17,3 +17,9 @@ spec:
    value: "red"
    effect: "NoSchedule"
 EOF
+
+To uncordon node:
+kubectl taint nodes node1 app=blue:NoSchedule-
+
+To see the tains on master node: 
+kubectl describe node controlplane | grep Taints

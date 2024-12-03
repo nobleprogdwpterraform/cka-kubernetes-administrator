@@ -1,8 +1,3 @@
-#Download visual studio code
-# https://code.visualstudio.com/download
-# sudo apt insall ./code....deb
-
-
 # Clone the code repo by running command: git clone https://github.com/nobleprogdwpterraform/cka-kubernetes-administrator.git
 # go to Downloads and code repository (cka)
 # run vagrant up (to bring 3 nodes up, 1 master node and 2 worker nodes setup)
@@ -60,7 +55,6 @@ KUBE_LATEST=$(curl -L -s https://dl.k8s.io/release/stable.txt | awk 'BEGIN { FS=
 }
 
 # 9. Adding Kubernetes APT Repository to Sources List
-This command adds the Kubernetes APT repository to the system's sources list, enabling the installation of Kubernetes packages from the specified repository.
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/${KUBE_LATEST}/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 # 10. install kubelet kubeadm and kubectl

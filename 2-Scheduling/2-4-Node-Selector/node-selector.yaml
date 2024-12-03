@@ -1,5 +1,6 @@
-# kubectl label nodes node01 size=Large
-# kubectl label nodes node02 size=Medium
+kubectl label nodes node01 size=Large
+
+kubectl label nodes node02 size=Medium
 
 cat <<EOF | kubectl create -f -
 apiVersion: v1
@@ -13,3 +14,7 @@ spec:
  nodeSelector:
   size: Large
 EOF
+
+# Remove node lable
+kubectl label nodes node01 size-
+kubectl label nodes node02 size-

@@ -1,3 +1,4 @@
+cat <<EOF | kubectl create -f -
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -16,3 +17,8 @@ spec:
       containers:
       - name: monitoring-agent
         image: nginx
+EOF
+
+
+kubectl get daemonsets
+kubectl describe daemonset monitoring-agent

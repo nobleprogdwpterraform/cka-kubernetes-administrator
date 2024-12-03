@@ -12,12 +12,21 @@ spec:
     image: nginx:1.14.2
 EOF
 
-#kubectl run nginx --image=nginnnx
+kubectl create -f pod-defintion.yaml
+
+kubectl run nginx --image=nginnnx
+kubectl get pods
+kubectl describe pods nginx
+kubectl delete pod nginx
+kubectl get pods nginx -o wide
+
+kubectl get nodes
+
 
 /*
 What is the image used to create the new pods? 
 How many containers are part of the pod webapp?,
-What is the state of the container agentx in the pod webapp?
+What is the state of the container nginx in the pod web-server?
 			kubectl describe pod newpods
 Which nodes are these pods placed on?
 			kubectl get pods -o wide

@@ -1,21 +1,18 @@
-FROM Ubuntu
-CMD sleep 5
-
-docker build -t ubuntu-sleeper
-
-FROM Ubuntu
-ENTRYPOINT ["sleep"]
-CMD ["5"]
-
+cat <<EOF | kubectl create -f -
 apiVersion: v1
 kind: Pod
 metadata:
-  name: ubuntu-sleeper-pod
+  name: nginx-pod
 spec:
- containers:
- - name: ubuntu-sleeper
-   image: ubuntu-sleeper
-   command: ["sleep"]
-   args: ["10"]
+  containers:
+  - name: nginx-container
+    image: nginx:latest
+    command: ["nginx"]
+    args: ["-g", "daemon off;"]
+    ports:
+    - containerPort: 80
 
-# cat /etc/kubernetes/manifests/kube-apiserver.yaml
+EOF
+
+
+# sudo cat /etc/kubernetes/manifests/kube-apiserver.yaml
