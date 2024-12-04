@@ -1,3 +1,4 @@
+cat << EOF | kubectl create -f -
 kind: PersistentVolume
 apiVersion: v1
 metadata:
@@ -8,7 +9,10 @@ spec:
    storage: 100Mi
   hostPath:
    path: /tmp/data
+EOF
 
+# Check persistent volume
+kubectl get pv
 
 spec:
   accessModes: [ "ReadWriteOnce" ]
@@ -28,4 +32,3 @@ spec:
    volumeId: volumeId
    fsType: ext4
 
-  kubectl get pv

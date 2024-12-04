@@ -2,7 +2,7 @@ cat <<EOF | kubectl create -f -
 apiVersion: certificates.k8s.io/v1
 kind: CertificateSigningRequest
 metadata:
-  name: sahdev
+  name: john
 spec:
   signerName: kubernetes.io/kube-apisever-client
   groups:
@@ -18,9 +18,9 @@ EOF
 sudo kubeadm certs check-expiration
 openssl x509 -in /etc/kubernetes/pki/apiserver.crt -text -noout
 
-  sudo openssl genrsa -out sahdev.key 2048
-  sudo openssl req -new -key sahdev.key -subj "/CN=sahdev" -out sahdev.csr
-  cat sahdev.csr | base64 | tr -d "\n"
+  sudo openssl genrsa -out john.key 2048
+  sudo openssl req -new -key john.key -subj "/CN=john" -out john.csr
+  cat john.csr | base64 | tr -d "\n"
   kubectl get csr
-  kubectl certificate approve sahdev
-  kubectl get csr sahdev -o yaml
+  kubectl certificate approve john
+  kubectl get csr john -o yaml

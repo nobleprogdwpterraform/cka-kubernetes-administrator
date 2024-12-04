@@ -27,25 +27,3 @@ spec:
    - configMapRef:
        name: app-config
 EOF
-
-
-
-cat <<EOF | kubectl create -f -
-apiVersion: v1
-kind: Pod
-metadata:
-  name: simple-webapp-color
-spec:
- containers:
- - name: simple-webapp-color
-   image: nginx
-   ports:
-   - containerPort: 8080
-   env:
-   - name: APP_COLOR
-     valueFrom:
-       configMapKeyRef:
-         name: app-config
-         key: APP_COLOR
-
-EOF

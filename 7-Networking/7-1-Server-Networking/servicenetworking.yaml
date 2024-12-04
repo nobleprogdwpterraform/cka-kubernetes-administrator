@@ -13,7 +13,7 @@ kubectl get po -n apps -o wide
 
 # To get the dns record of the nginx Pod from the default namespace
 # replace . with - in ip address of nginx pod
-kubectl run -it test --image=busybox:1.28 --rm --restart=Never -- nslookup 10-244-192-2.apps.pod.cluster.local
+kubectl run -it test --image=busybox:1.28 --rm --restart=Never -- nslookup 10-47-0-1.apps.pod.cluster.local
 
 
 Service DNS Record:
