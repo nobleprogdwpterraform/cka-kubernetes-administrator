@@ -1,0 +1,105 @@
+
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+kubectl get pods -n ingress-nginx
+
+kubectl expose deployment ingress-nginx-controller --port=80 --target-port=80 --name=nginx-ingress --type=NodePort -n ingress-nginx
+kubectl get svc -n ingress-nginx
+
+
+cat << EOF | kubectl create -f -
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wear
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: wear
+  template:
+    metadata:
+      labels:
+        app: wear
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+          command: ["/bin/sh", "-c", "echo 'Welcome to wear service' > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"]
+          volumeMounts:
+            - name: html-volume
+              mountPath: /usr/share/nginx/html
+      volumes:
+        - name: html-volume
+          emptyDir: {}
+EOF
+
+cat << EOF | kubectl create -f -
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: watch
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: watch
+  template:
+    metadata:
+      labels:
+        app: watch
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+          command: ["/bin/sh", "-c", "echo 'Welcome to watch service' > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"]
+          volumeMounts:
+            - name: html-volume
+              mountPath: /usr/share/nginx/html
+      volumes:
+        - name: html-volume
+          emptyDir: {}
+EOF
+
+kubectl expose deployment wear --port=80 --name=wear-service -n default
+kubectl expose deployment watch --port=80 --name=watch-service -n default
+
+
+
+cat << EOF | kubectl create -f -
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: wear-watch-ingress
+  namespace: default
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: wear-service
+            port:
+              number: 80
+        path: /wear
+        pathType: Prefix
+      - path: /watch
+        pathType: Prefix
+        backend:
+          service:
+           name: watch-service
+           port:
+            number: 80
+EOF
+
+
+curl http://10.0.3.16:<NODE_PORT>/wear

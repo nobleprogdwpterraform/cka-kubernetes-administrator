@@ -1,7 +1,3 @@
-# Destroy existing VMs for new cluster with v1.31 setup
-vagrant destroy --force
-vagrant up
-
 # 1. Update the apt package index and install packages needed to use the Kubernetes apt repository
 {
     sudo apt-get update
@@ -43,11 +39,11 @@ sudo apt-get install -y containerd
 sudo systemctl restart containerd
 
 # 7.Adding Kubernetes APT Repository to Sources List
-echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 # 8. Adding Kubernetes APT Repository GPG Key
 {
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 }
 
 # 10. install kubelet kubeadm and kubectl
