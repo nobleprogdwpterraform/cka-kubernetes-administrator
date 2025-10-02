@@ -1,4 +1,4 @@
-cat <<EOF>> resource-quota.yaml
+cat << EOF | resource-quota.yaml
 apiVersion: v1
 kind: ResourceQuota
 metadata:

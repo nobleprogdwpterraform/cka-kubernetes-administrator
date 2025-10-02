@@ -11,6 +11,7 @@ rules:
 - apiGroups: [""]
   resources: ["configmaps"]
   verbs: ["create"]
+EOF
 
 
 cat <<EOF | kubectl create -f -
@@ -26,6 +27,7 @@ roleRef:
   kind: Role
   name: developer
   apiGroup: rbac.authorization.k8s.io
+EOF
 
   kubectl get roles
   kubectl get rolebindings -o wide

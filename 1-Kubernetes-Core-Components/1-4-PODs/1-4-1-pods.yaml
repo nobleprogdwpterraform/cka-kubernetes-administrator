@@ -14,7 +14,7 @@ EOF
 
 kubectl create -f pod-defintion.yaml
 
-kubectl run nginx --image=nginnnx
+kubectl run nginx --image=nginx
 kubectl get pods
 kubectl describe pods nginx
 kubectl delete pod nginx

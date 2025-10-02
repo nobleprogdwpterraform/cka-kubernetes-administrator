@@ -18,8 +18,11 @@ spec:
    effect: "NoSchedule"
 EOF
 
-To uncordon node:
+To untaint node:
 kubectl taint nodes node01 app=blue:NoSchedule-
 
 To see the tains on master node: 
 kubectl describe node controlplane | grep Taints
+
+To uncordon node:
+kubectl uncordon node02

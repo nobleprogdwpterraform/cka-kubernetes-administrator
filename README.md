@@ -5,6 +5,11 @@
 
 # Below is kubernetes cluster setup commands 
 
+# 0. Login to virtual nodes
+vagrant ssh controlplane
+vagrant ssh node01
+vagrant ssh node02
+
 # 1. Update the apt package index and install packages needed to use the Kubernetes apt repository
 {
     sudo apt-get update

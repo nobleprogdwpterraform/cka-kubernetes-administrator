@@ -7,6 +7,7 @@ provisioner: kubernetes.io/gce-pd
 EOF
 
 ---
+cat << EOF | kubectl create -f -
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -17,8 +18,9 @@ spec:
   resources:
    requests:
      storage: 500Mi
-
+EOF
 ---
+cat << EOF | kubectl create -f -
 apiVersion: v1
 kind: Pod
 metadata:
@@ -34,4 +36,4 @@ spec:
     - name: mypd
       persistentVolumeClaim:
         claimName: myclaim
-
+EOF

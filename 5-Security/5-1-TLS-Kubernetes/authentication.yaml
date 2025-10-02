@@ -4,7 +4,7 @@ kind: CertificateSigningRequest
 metadata:
   name: john
 spec:
-  signerName: kubernetes.io/kube-apisever-client
+  signerName: kubernetes.io/kube-apiserver-client
   groups:
   - system:authenticated
   usages:
